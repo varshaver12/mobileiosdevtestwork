@@ -18,7 +18,7 @@ final class BottomSheetCell: UITableViewCell {
     // MARK: - Private properties
     
     private let nameSortLabel = UILabel(textColor: .black,
-                                        font: UIFont(name: "SFProDisplay-Regular", size: Constants.fontSize11))
+                                        font: UIFont(name: "Apple SD Gothic Neo UltraLight", size: 18))
     private let checkmark: UIImageView = {
         let imageView = UIImageView(image: UIImage(systemName: "checkmark"))
         imageView.tintColor = UIColor.systemBlue
@@ -76,7 +76,6 @@ private extension BottomSheetCell {
         }
         checkmark.snp.makeConstraints {
             $0.width.equalTo(LocalConstants.checkmarkSize)
-            $0.height.equalTo(LocalConstants.checkmarkSize)
             $0.top.equalToSuperview()
             $0.leading.equalTo(nameSortLabel.snp.trailing)
             $0.trailing.equalToSuperview().inset(Constants.inset20)
@@ -88,7 +87,7 @@ private extension BottomSheetCell {
 
 private extension BottomSheetCell {
     enum LocalConstants {
-        static let checkmarkSize: CGFloat = 20
+        static let checkmarkSize: CGFloat = 25
     }
 }
 

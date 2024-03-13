@@ -11,11 +11,11 @@ final class BottomSheetTableView: UITableViewController {
     
     private var viewModel: IBottomSheetViewModel
     private var tableManager: IBottomSheetManager?
-    private var currentSort: DealsSorting
+    private var currentSort: (DealsSorting, SortOrder)
     
     // MARK: - Lifecycle
     
-    init(viewModel: IBottomSheetViewModel, currentSort: DealsSorting) {
+    init(viewModel: IBottomSheetViewModel, currentSort: (DealsSorting, SortOrder)) {
         
         self.viewModel = viewModel
         self.currentSort = currentSort
@@ -36,14 +36,13 @@ final class BottomSheetTableView: UITableViewController {
 private extension BottomSheetTableView {
     
     func tableSetup() {
-        tableManager = BottomSheetManager(currentSort: currentSort)
+        tableManager = BottomSheetManager(viewModel: viewModel)
         tableView.delegate = tableManager
         tableView.dataSource = tableManager
         
         tableView.backgroundColor = .white
         tableView.separatorStyle = .none
         tableView.bounces = false
-        tableView.allowsSelection = false
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
         
@@ -56,21 +55,10 @@ private extension BottomSheetTableView {
     
     func setupConfigurates() {
         
-        switch currentSort {
-        case .dealModificationDate(let sortOrder):
-            tableView.tableHeaderView = BottomSheetHeader(viewModel: viewModel, currentSort: sortOrder)
-        case .instrumentName(let sortOrder):
-            tableView.tableHeaderView = BottomSheetHeader(viewModel: viewModel, currentSort: sortOrder)
-        case .dealPrice(let sortOrder):
-            tableView.tableHeaderView = BottomSheetHeader(viewModel: viewModel, currentSort: sortOrder)
-        case .dealVolume(let sortOrder):
-            tableView.tableHeaderView = BottomSheetHeader(viewModel: viewModel, currentSort: sortOrder)
-        case .dealSide(let sortOrder):
-            tableView.tableHeaderView = BottomSheetHeader(viewModel: viewModel, currentSort: sortOrder)
-        }
-        
-        tableView.tableHeaderView?.frame.size.height = 35
-        
+        tableView.tableHeaderView = BottomSheetHeader(viewModel: viewModel, currentSortOrder: currentSort.1)
+        tableView.tableFooterView = BottomSheetFooter(viewModel: viewModel)
+        tableView.tableHeaderView?.frame.size.height = 80
+        tableView.tableFooterView?.frame.size.height = 60
     }
     
 }

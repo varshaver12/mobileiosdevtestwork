@@ -8,24 +8,20 @@
 import UIKit
 
 protocol IBottomSheetManager: UITableViewDelegate, UITableViewDataSource {
-    var currentSort: DealsSorting { get set }
+    var viewModel: IBottomSheetViewModel { get set }
 }
 
 final class BottomSheetManager: NSObject {
     
     // MARK: - Internal properties
     
-    var currentSort: DealsSorting
-    let sortingOptions: [DealsSorting] = [.dealModificationDate(sortOrder: .ascending),
-                                          .instrumentName(sortOrder: .ascending),
-                                          .dealPrice(sortOrder: .ascending),
-                                          .dealVolume(sortOrder: .ascending),
-                                          .dealSide(sortOrder: .ascending)]
+    private var allCasesDealsSorting = DealsSorting.allCases
+    var viewModel: IBottomSheetViewModel
     
     // MARK: - Lifecycle
     
-    init(currentSort: DealsSorting) {
-        self.currentSort = currentSort
+    init(viewModel: IBottomSheetViewModel) {
+        self.viewModel = viewModel
     }
     
 }
@@ -35,7 +31,7 @@ final class BottomSheetManager: NSObject {
 extension BottomSheetManager: IBottomSheetManager {
     
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        sortingOptions.count
+        DealsSorting.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -45,18 +41,21 @@ extension BottomSheetManager: IBottomSheetManager {
             return UITableViewCell()
         }
         
-        let sortingOption = sortingOptions[indexPath.row]
-        print(sortingOption.sortName)
-        print(currentSort.sortName)
-        cell.setContent(nameSort: sortingOption.sortName,
-                        isSelected: sortingOption.sortName == currentSort.sortName )
+        cell.setContent(nameSort: allCasesDealsSorting[indexPath.row].sortName,
+                        isSelected: allCasesDealsSorting[indexPath.row].sortName == viewModel.currentSort.0.sortName )
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        return Constants.heightForRow
+        return 60
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.currentSort.0 = allCasesDealsSorting[indexPath.row]
+        tableView.deselectRow(at: indexPath, animated: true)
+        tableView.reloadData()
     }
     
 }

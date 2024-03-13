@@ -1,5 +1,5 @@
 //
-//  BottomSheetView.swift
+//  BottomSheetTableView.swift
 //  mobileiosdevtestwork
 //
 //  Created by Aleksey Khlestkin on 13.03.2024.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class BottomSheetTableView: UITableView {
+final class BottomSheetTableView: UITableViewController {
     
     private var viewModel: IBottomSheetViewModel
     private var tableManager: IBottomSheetManager?
@@ -20,7 +20,7 @@ final class BottomSheetTableView: UITableView {
         self.viewModel = viewModel
         self.currentSort = currentSort
         
-        super.init(frame: .zero, style: .plain)
+        super.init(style: .plain)
         
         tableSetup()
         setupConfigurates()
@@ -37,25 +37,40 @@ private extension BottomSheetTableView {
     
     func tableSetup() {
         tableManager = BottomSheetManager(currentSort: currentSort)
-        delegate = tableManager
-        dataSource = tableManager
+        tableView.delegate = tableManager
+        tableView.dataSource = tableManager
         
-        backgroundColor = .white
-        separatorStyle = .none
-        bounces = false
-        allowsSelection = false
-        showsVerticalScrollIndicator = false
-        showsHorizontalScrollIndicator = false
+        tableView.backgroundColor = .white
+        tableView.separatorStyle = .none
+        tableView.bounces = false
+        tableView.allowsSelection = false
+        tableView.showsVerticalScrollIndicator = false
+        tableView.showsHorizontalScrollIndicator = false
         
         registerCell()
     }
     
     func registerCell() {
-        register(BottomSheetCell.self, forCellReuseIdentifier: BottomSheetCell.cellIdentifier)
+        tableView.register(BottomSheetCell.self, forCellReuseIdentifier: BottomSheetCell.cellIdentifier)
     }
     
     func setupConfigurates() {
         
+        switch currentSort {
+        case .dealModificationDate(let sortOrder):
+            tableView.tableHeaderView = BottomSheetHeader(viewModel: viewModel, currentSort: sortOrder)
+        case .instrumentName(let sortOrder):
+            tableView.tableHeaderView = BottomSheetHeader(viewModel: viewModel, currentSort: sortOrder)
+        case .dealPrice(let sortOrder):
+            tableView.tableHeaderView = BottomSheetHeader(viewModel: viewModel, currentSort: sortOrder)
+        case .dealVolume(let sortOrder):
+            tableView.tableHeaderView = BottomSheetHeader(viewModel: viewModel, currentSort: sortOrder)
+        case .dealSide(let sortOrder):
+            tableView.tableHeaderView = BottomSheetHeader(viewModel: viewModel, currentSort: sortOrder)
+        }
+        
+        tableView.tableHeaderView?.frame.size.height = 35
+        
     }
-
+    
 }

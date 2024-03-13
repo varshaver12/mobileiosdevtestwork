@@ -6,3 +6,21 @@
 //
 
 import Foundation
+
+protocol IBottomSheetViewModel {
+    
+}
+
+final class BottomSheetViewModel: IBottomSheetViewModel {
+    
+    private weak var delegate: DealsScreenView?
+    
+    init(delegate: DealsScreenView) {
+        self.delegate = delegate
+    }
+    
+    func sortOrderButtonTapped(sortOrder: DealsSorting.SortOrder) {
+        
+    }
+    
+}

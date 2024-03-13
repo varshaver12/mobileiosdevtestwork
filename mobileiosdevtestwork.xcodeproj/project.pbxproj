@@ -12,6 +12,7 @@
 		3B8B08C62BA170E4003A2EEF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8B08C52BA170E4003A2EEF /* ViewController.swift */; };
 		3B8B08CB2BA170E6003A2EEF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3B8B08CA2BA170E6003A2EEF /* Assets.xcassets */; };
 		3B8B08CE2BA170E6003A2EEF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B8B08CC2BA170E6003A2EEF /* LaunchScreen.storyboard */; };
+		3B8B08DA2BA17C72003A2EEF /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8B08D92BA17C72003A2EEF /* Server.swift */; };
 		9BA5E993BF44E48F50A58D9D /* Pods_mobileiosdevtestwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0FBB8485D178500110E0014 /* Pods_mobileiosdevtestwork.framework */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +24,7 @@
 		3B8B08CA2BA170E6003A2EEF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3B8B08CD2BA170E6003A2EEF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3B8B08CF2BA170E6003A2EEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3B8B08D92BA17C72003A2EEF /* Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
 		970CB319CE66F7C3B44B8A3B /* Pods-mobileiosdevtestwork.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mobileiosdevtestwork.release.xcconfig"; path = "Target Support Files/Pods-mobileiosdevtestwork/Pods-mobileiosdevtestwork.release.xcconfig"; sourceTree = "<group>"; };
 		AB37D1C92966FB239E91688E /* Pods-mobileiosdevtestwork.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mobileiosdevtestwork.debug.xcconfig"; path = "Target Support Files/Pods-mobileiosdevtestwork/Pods-mobileiosdevtestwork.debug.xcconfig"; sourceTree = "<group>"; };
 		E0FBB8485D178500110E0014 /* Pods_mobileiosdevtestwork.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_mobileiosdevtestwork.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -72,6 +74,7 @@
 				3B8B08C12BA170E4003A2EEF /* AppDelegate.swift */,
 				3B8B08C32BA170E4003A2EEF /* SceneDelegate.swift */,
 				3B8B08C52BA170E4003A2EEF /* ViewController.swift */,
+				3B8B08D72BA17C45003A2EEF /* Services */,
 				3B8B08D52BA175AC003A2EEF /* Sources */,
 			);
 			path = mobileiosdevtestwork;
@@ -93,6 +96,22 @@
 				3B8B08CF2BA170E6003A2EEF /* Info.plist */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		3B8B08D72BA17C45003A2EEF /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				3B8B08D82BA17C5D003A2EEF /* NetworkService */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		3B8B08D82BA17C5D003A2EEF /* NetworkService */ = {
+			isa = PBXGroup;
+			children = (
+				3B8B08D92BA17C72003A2EEF /* Server.swift */,
+			);
+			path = NetworkService;
 			sourceTree = "<group>";
 		};
 		55B877FA3545045CC637E578 /* Pods */ = {
@@ -220,6 +239,7 @@
 			files = (
 				3B8B08C62BA170E4003A2EEF /* ViewController.swift in Sources */,
 				3B8B08C22BA170E4003A2EEF /* AppDelegate.swift in Sources */,
+				3B8B08DA2BA17C72003A2EEF /* Server.swift in Sources */,
 				3B8B08C42BA170E4003A2EEF /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -74,8 +74,8 @@ struct Deal {
   let price: Double
   let amount: Double
   let side: Side
-  
-  enum Side: CaseIterable {
+    
+  enum Side: String, CaseIterable {
     case sell, buy
   }
 }

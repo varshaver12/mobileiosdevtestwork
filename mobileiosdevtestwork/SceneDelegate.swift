@@ -17,7 +17,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
         
-        let rootVC = ViewController()
+        let viewModel = DealsScreenViewModel()
+        let rootVC = DealsScreenView(viewModel: viewModel)
         let navigationController = UINavigationController(rootViewController: rootVC)
         window = UIWindow(windowScene: scene)
         window?.rootViewController = navigationController

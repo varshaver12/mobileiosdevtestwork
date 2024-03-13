@@ -10,7 +10,6 @@
 		3B8B08C22BA170E4003A2EEF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8B08C12BA170E4003A2EEF /* AppDelegate.swift */; };
 		3B8B08C42BA170E4003A2EEF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8B08C32BA170E4003A2EEF /* SceneDelegate.swift */; };
 		3B8B08C62BA170E4003A2EEF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8B08C52BA170E4003A2EEF /* ViewController.swift */; };
-		3B8B08C92BA170E4003A2EEF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B8B08C72BA170E4003A2EEF /* Main.storyboard */; };
 		3B8B08CB2BA170E6003A2EEF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3B8B08CA2BA170E6003A2EEF /* Assets.xcassets */; };
 		3B8B08CE2BA170E6003A2EEF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B8B08CC2BA170E6003A2EEF /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -20,7 +19,6 @@
 		3B8B08C12BA170E4003A2EEF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3B8B08C32BA170E4003A2EEF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		3B8B08C52BA170E4003A2EEF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		3B8B08C82BA170E4003A2EEF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3B8B08CA2BA170E6003A2EEF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3B8B08CD2BA170E6003A2EEF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3B8B08CF2BA170E6003A2EEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -59,12 +57,27 @@
 				3B8B08C12BA170E4003A2EEF /* AppDelegate.swift */,
 				3B8B08C32BA170E4003A2EEF /* SceneDelegate.swift */,
 				3B8B08C52BA170E4003A2EEF /* ViewController.swift */,
-				3B8B08C72BA170E4003A2EEF /* Main.storyboard */,
-				3B8B08CA2BA170E6003A2EEF /* Assets.xcassets */,
-				3B8B08CC2BA170E6003A2EEF /* LaunchScreen.storyboard */,
-				3B8B08CF2BA170E6003A2EEF /* Info.plist */,
+				3B8B08D52BA175AC003A2EEF /* Sources */,
 			);
 			path = mobileiosdevtestwork;
+			sourceTree = "<group>";
+		};
+		3B8B08D52BA175AC003A2EEF /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				3B8B08CC2BA170E6003A2EEF /* LaunchScreen.storyboard */,
+				3B8B08D62BA175C8003A2EEF /* Resources */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		3B8B08D62BA175C8003A2EEF /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				3B8B08CA2BA170E6003A2EEF /* Assets.xcassets */,
+				3B8B08CF2BA170E6003A2EEF /* Info.plist */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -127,7 +140,6 @@
 			files = (
 				3B8B08CE2BA170E6003A2EEF /* LaunchScreen.storyboard in Resources */,
 				3B8B08CB2BA170E6003A2EEF /* Assets.xcassets in Resources */,
-				3B8B08C92BA170E4003A2EEF /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,14 +159,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		3B8B08C72BA170E4003A2EEF /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3B8B08C82BA170E4003A2EEF /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		3B8B08CC2BA170E6003A2EEF /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -218,7 +222,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -275,7 +279,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -294,12 +298,12 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = G5YZPTWNRQ;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = mobileiosdevtestwork/Info.plist;
+				INFOPLIST_FILE = mobileiosdevtestwork/Sources/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -307,6 +311,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.khlestkin.mobileiosdevtestwork;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -322,12 +329,12 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = G5YZPTWNRQ;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = mobileiosdevtestwork/Info.plist;
+				INFOPLIST_FILE = mobileiosdevtestwork/Sources/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -335,6 +342,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.khlestkin.mobileiosdevtestwork;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

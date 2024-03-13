@@ -13,12 +13,6 @@ final class DealsScreenView: UIViewController {
     private var tableView: DealsScreenTableView?
     
     private lazy var server = Server()
-//    private lazy var model: [Deal] = [] {
-//        didSet {
-//            tableView?.content = model
-//            print(model.count)
-//        }
-//    }
     
     init(viewModel: IDealsScreenViewModel) {
         self.viewModel = viewModel

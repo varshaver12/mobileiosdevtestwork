@@ -14,20 +14,15 @@ final class DealTableViewCell: UITableViewCell {
     // MARK: - Private properties
     
     private let dateModifierLabel = UILabel(textColor: .gray,
-                                            font: UIFont(name: "SFProDisplay-Regular", size: Constants.fontSize11),
-                                            textAlignment: .left)
+                                            font: UIFont(name: "SFProDisplay-Regular", size: Constants.fontSize11))
     private let instrumentNameLabel = UILabel(textColor: .black,
-                                              font: UIFont(name: "SFProDisplay-Regular", size: Constants.fontSize12),
-                                              textAlignment: .left)
+                                              font: UIFont(name: "SFProDisplay-Regular", size: Constants.fontSize12))
     private let priceLabel = UILabel(textColor: .black,
-                                     font: UIFont(name: "SFProDisplay-Regular", size: Constants.fontSize12),
-                                     textAlignment: .left)
+                                     font: UIFont(name: "SFProDisplay-Regular", size: Constants.fontSize12))
     private let amountLabel = UILabel(textColor: .black,
-                                      font: UIFont(name: "SFProDisplay-Regular", size: Constants.fontSize12),
-                                      textAlignment: .left)
+                                      font: UIFont(name: "SFProDisplay-Regular", size: Constants.fontSize12))
     private let sideLabel = UILabel(textColor: .black,
-                                    font: UIFont(name: "SFProDisplay-Regular", size: Constants.fontSize12),
-                                    textAlignment: .left)
+                                    font: UIFont(name: "SFProDisplay-Regular", size: Constants.fontSize12))
     
     
     
@@ -53,7 +48,7 @@ extension DealTableViewCell: IDealTableViewCell {
     
     func setContent(deal: Deal) {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm:ss dd:MM:yyyy"
+        dateFormatter.dateFormat = "HH:mm:ss dd.MM.yyyy"
         dateModifierLabel.text = dateFormatter.string(from: deal.dateModifier)
         
         instrumentNameLabel.text = deal.instrumentName

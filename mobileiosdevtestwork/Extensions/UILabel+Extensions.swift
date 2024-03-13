@@ -13,7 +13,7 @@ extension UILabel {
                      textColor: UIColor? = UIColor.darkText,
                      font: UIFont? = UIFont(name: "SFProDisplay-Regular", size: 16),
                      isHidden: Bool? = false,
-                     textAlignment: NSTextAlignment? = .natural
+                     textAlignment: NSTextAlignment? = .left
     ) {
         self.init()
         self.text = text

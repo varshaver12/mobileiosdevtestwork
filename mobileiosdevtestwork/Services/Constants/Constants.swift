@@ -15,4 +15,6 @@ enum Constants {
     static let fontSize12: CGFloat = 12
     
     static let double100: Double = 100.0
+    
+    static let heightForRow: CGFloat = 70
 }

@@ -60,20 +60,8 @@ private extension DealsScreenTableView {
     func setupConfigurates() {
         
         tableHeaderView = DealsTableHeaderView()
-        
-        upgradeHeightHeader()
-    }
-    
-    func upgradeHeightHeader() {
-        
-        if let headerViewH = tableHeaderView {
-            let height = headerViewH.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-            var frame = headerViewH.frame
-            frame.size.height = height
-            headerViewH.frame = frame
-            tableHeaderView = headerViewH
-        }
-        
+        tableHeaderView?.frame.size.height = 35
+
     }
 
 }

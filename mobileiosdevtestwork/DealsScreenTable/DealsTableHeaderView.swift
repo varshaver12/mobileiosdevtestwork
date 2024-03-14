@@ -11,10 +11,11 @@ final class DealsTableHeaderView: UIView {
     
     // MARK: - Private properties
     
-    private var instrument = UILabel(font: UIFont(name: "SFProDisplay-Regular", size: 11))
-    private var price = UILabel(font: UIFont(name: "SFProDisplay-Regular", size: 11))
-    private var amount = UILabel(font: UIFont(name: "SFProDisplay-Regular", size: 11))
-    private var side = UILabel(font: UIFont(name: "SFProDisplay-Regular", size: 11))
+    private var instrument = UILabel(font: UIFont(name: LocalConstants.textFont,
+                                                  size: LocalConstants.textSize), textAlignment: .center)
+    private var price = UILabel(font: UIFont(name: LocalConstants.textFont, size: LocalConstants.textSize))
+    private var amount = UILabel(font: UIFont(name: LocalConstants.textFont, size: LocalConstants.textSize))
+    private var side = UILabel(font: UIFont(name: LocalConstants.textFont, size: LocalConstants.textSize))
     
     // MARK: - Life Cycle
     
@@ -38,10 +39,10 @@ final class DealsTableHeaderView: UIView {
 extension DealsTableHeaderView {
     
     func setupConfiguration() {
-        instrument.text = "Instrument"
-        price.text = "Price"
-        amount.text = "Amount"
-        side.text = "Side"
+        instrument.text = LocalConstants.instrument
+        price.text = LocalConstants.price
+        amount.text = LocalConstants.amount
+        side.text = LocalConstants.side
         
         backgroundColor = UIColor.white
     }
@@ -91,5 +92,13 @@ private extension DealsTableHeaderView {
         static let multiplierPrice: CGFloat = 1 / 5
         static let multiplierAmount: CGFloat = 1.5 / 5
         static let multiplierSide: CGFloat = 0.5 / 5
+        static let textSize: CGFloat = 18
+        
+        static let textFont: String = "Apple SD Gothic Neo UltraLight"
+        static let instrument: String = "Instrument"
+        static let price: String = "Price"
+        static let amount: String = "Amount"
+        static let side: String = "Side"
+
     }
 }

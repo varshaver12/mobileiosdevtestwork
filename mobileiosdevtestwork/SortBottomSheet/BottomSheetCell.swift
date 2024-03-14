@@ -18,9 +18,10 @@ final class BottomSheetCell: UITableViewCell {
     // MARK: - Private properties
     
     private let nameSortLabel = UILabel(textColor: .black,
-                                        font: UIFont(name: "Apple SD Gothic Neo UltraLight", size: 18))
+                                        font: UIFont(name: LocalConstants.textFont,
+                                                     size: LocalConstants.textSize))
     private let checkmark: UIImageView = {
-        let imageView = UIImageView(image: UIImage(systemName: "checkmark"))
+        let imageView = UIImageView(image: UIImage(systemName: LocalConstants.checkmark))
         imageView.tintColor = UIColor.systemBlue
         imageView.contentMode = .scaleAspectFit
         return imageView
@@ -32,7 +33,6 @@ final class BottomSheetCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        setupConfiguration()
         setupSubViews()
         setupConstraints()
     }
@@ -57,10 +57,6 @@ extension BottomSheetCell: IBottomSheetCell {
 // MARK: - Private methods
 
 private extension BottomSheetCell {
-    
-    func setupConfiguration() {
-        
-    }
     
     func setupSubViews() {
         
@@ -88,6 +84,9 @@ private extension BottomSheetCell {
 private extension BottomSheetCell {
     enum LocalConstants {
         static let checkmarkSize: CGFloat = 25
+        static let textSize: CGFloat = 18
+        static let textFont: String = "Apple SD Gothic Neo UltraLight"
+        static let checkmark: String = "checkmark"
     }
 }
 

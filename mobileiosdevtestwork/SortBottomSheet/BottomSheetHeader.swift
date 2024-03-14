@@ -14,14 +14,14 @@ final class BottomSheetHeader: UIView {
     private var viewModel: IBottomSheetViewModel
     private var currentSortOrder: SortOrder
     
-    private var sortingLabel = UILabel(text: "Сортировать",
-                                       font: UIFont(name: "Apple SD Gothic Neo UltraLight", size: 24),
+    private var sortingLabel = UILabel(text: LocalConstants.sortingLabel,
+                                       font: UIFont(name: LocalConstants.textFont, size: LocalConstants.textSizeHigh),
                                        textAlignment: .left)
     private lazy var sortOrderButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = .white
-        button.setTitle("", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Apple SD Gothic Neo UltraLight", size: 18)
+        button.setTitle(LocalConstants.empty, for: .normal)
+        button.titleLabel?.font = UIFont(name: LocalConstants.textFont, size: LocalConstants.textSize)
         button.tintColor = .blue
         button.titleLabel?.textAlignment = .right
         button.addTarget(self, action: #selector(sortOrderButtonTapped), for: .touchUpInside)
@@ -92,6 +92,17 @@ private extension BottomSheetHeader {
         currentSortOrder = currentSortOrder == .ascending ? .descending : .ascending
         sortOrderButton.setTitle(currentSortOrder.orderName, for: .normal)
         viewModel.currentSort.1 = currentSortOrder
+    }
+}
+
+private extension BottomSheetHeader {
+    enum LocalConstants {
+        static let textSize: CGFloat = 18
+        static let textSizeHigh: CGFloat = 24
+        
+        static let textFont: String = "Apple SD Gothic Neo UltraLight"
+        static let sortingLabel: String = "Сортировать"
+        static let empty: String = ""
     }
 }
 

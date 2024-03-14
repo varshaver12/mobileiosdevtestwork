@@ -49,7 +49,7 @@ extension BottomSheetManager: IBottomSheetManager {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        return 60
+        return LocalConstants.heightCell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -60,3 +60,8 @@ extension BottomSheetManager: IBottomSheetManager {
     
 }
 
+private extension BottomSheetManager {
+    enum LocalConstants {
+        static let heightCell: CGFloat = 60
+    }
+}

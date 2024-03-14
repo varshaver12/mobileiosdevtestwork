@@ -11,11 +11,21 @@ final class DealsScreenTableView: UITableView {
     
     var content: [Deal] = [] {
         didSet {
-            tableManager?.contentCells = content
-            DispatchQueue.main.async {
-                self.reloadData()
+            tableManager?.newContentCells = content
+            content = []
+            DispatchQueue.main.async{ [weak self] in
+                self?.reloadData()
             }
-            print(content.count)
+            
+        }
+    }
+    
+    var currentSort: (DealsSorting, SortOrder) {
+        didSet {
+            tableManager?.currentSort = currentSort
+            DispatchQueue.main.async{ [weak self] in
+                self?.reloadData()
+            }
         }
     }
     
@@ -24,9 +34,10 @@ final class DealsScreenTableView: UITableView {
     
     // MARK: - Lifecycle
     
-    init(viewModel: IDealsTableViewModel) {
+    init(viewModel: IDealsTableViewModel, currentSort: (DealsSorting, SortOrder)) {
         
         self.viewModel = viewModel
+        self.currentSort = currentSort
         
         super.init(frame: .zero, style: .plain)
         
@@ -44,7 +55,7 @@ final class DealsScreenTableView: UITableView {
 private extension DealsScreenTableView {
     
     func tableSetup() {
-        tableManager = DealsTableManager(contentCells: content)
+        tableManager = DealsTableManager(newContentCells: content, currentSort: currentSort)
         delegate = tableManager
         dataSource = tableManager
         
@@ -60,9 +71,15 @@ private extension DealsScreenTableView {
     func setupConfigurates() {
         
         tableHeaderView = DealsTableHeaderView()
-        tableHeaderView?.frame.size.height = 35
-
+        tableHeaderView?.frame.size.height = LocalConstants.tableHeaderHeight
+        
     }
-
+    
 }
 
+private extension DealsScreenTableView {
+    enum LocalConstants {
+        static let tableHeaderHeight: CGFloat = 35
+
+    }
+}

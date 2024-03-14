@@ -49,9 +49,9 @@ private extension BottomSheetFooter {
     func createButton() -> UIButton {
         let button = UIButton(type: .system)
         button.backgroundColor = .blue
-        button.layer.cornerRadius = 8
+        button.layer.cornerRadius = LocalConstants.bottonCornerRadius
         button.setTitle(LocalConstants.bottomButtonText, for: .normal)
-        button.titleLabel?.font = UIFont(name: "Apple SD Gothic Neo UltraLight", size: 20)
+        button.titleLabel?.font = UIFont(name: LocalConstants.textFont, size: LocalConstants.textSize)
         button.tintColor = .white
         return button
     }
@@ -73,7 +73,11 @@ private extension BottomSheetFooter {
 private extension BottomSheetFooter {
     
     enum LocalConstants {
+        static let textSize: CGFloat = 20
+        static let bottonCornerRadius: CGFloat = 8
+        
         static let bottomButtonText = "Применить"
+        static let textFont: String = "Apple SD Gothic Neo UltraLight"
     }
     
 }

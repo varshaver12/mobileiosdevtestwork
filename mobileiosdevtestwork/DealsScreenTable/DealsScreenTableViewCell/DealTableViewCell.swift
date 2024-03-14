@@ -14,15 +14,15 @@ final class DealTableViewCell: UITableViewCell {
     // MARK: - Private properties
     
     private let dateModifierLabel = UILabel(textColor: .gray,
-                                            font: UIFont(name: "SFProDisplay-Regular", size: Constants.fontSize11))
+                                            font: UIFont(name: LocalConstants.textFont, size: LocalConstants.textSizeLit))
     private let instrumentNameLabel = UILabel(textColor: .black,
-                                              font: UIFont(name: "SFProDisplay-Regular", size: Constants.fontSize12))
+                                              font: UIFont(name: LocalConstants.textFont, size: LocalConstants.textSize))
     private let priceLabel = UILabel(textColor: .black,
-                                     font: UIFont(name: "SFProDisplay-Regular", size: Constants.fontSize12))
+                                     font: UIFont(name: LocalConstants.textFont, size: LocalConstants.textSize))
     private let amountLabel = UILabel(textColor: .black,
-                                      font: UIFont(name: "SFProDisplay-Regular", size: Constants.fontSize12))
+                                      font: UIFont(name: LocalConstants.textFont, size: LocalConstants.textSize))
     private let sideLabel = UILabel(textColor: .black,
-                                    font: UIFont(name: "SFProDisplay-Regular", size: Constants.fontSize12))
+                                    font: UIFont(name: LocalConstants.textFont, size: LocalConstants.textSize))
     
     
     
@@ -59,10 +59,10 @@ extension DealTableViewCell: IDealTableViewCell {
         
         switch deal.side {
         case .sell:
-            sideLabel.text = "Sell"
+            sideLabel.text = LocalConstants.sideLabelRed
             sideLabel.textColor = .red
         case .buy:
-            sideLabel.text = "Buy"
+            sideLabel.text = LocalConstants.sideLabelGreen
             sideLabel.textColor = .green
         }
     }
@@ -74,7 +74,7 @@ extension DealTableViewCell: IDealTableViewCell {
 private extension DealTableViewCell {
     
     func setupConfiguration() {
-        contentView.layer.cornerRadius = 10 
+        contentView.layer.cornerRadius = LocalConstants.viewCornerRadius
         contentView.layer.masksToBounds = true
     }
     
@@ -129,5 +129,11 @@ private extension DealTableViewCell {
         static let multiplierPrice: CGFloat = 1 / 5
         static let multiplierAmount: CGFloat = 1.5 / 5
         static let multiplierSide: CGFloat = 0.5 / 5
+        static let viewCornerRadius: CGFloat = 10
+        static let textSize: CGFloat = 18
+        static let textSizeLit: CGFloat = 16
+        static let textFont: String = "Apple SD Gothic Neo UltraLight"
+        static let sideLabelRed = "Sell"
+        static let sideLabelGreen = "Buy"
     }
 }

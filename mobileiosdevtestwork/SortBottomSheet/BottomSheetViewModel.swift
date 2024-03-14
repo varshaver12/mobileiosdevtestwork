@@ -30,7 +30,6 @@ final class BottomSheetViewModel: IBottomSheetViewModel {
     }
     
     func sortOrderButtonTapped() {
-        print("func sortOrderButtonTapped()")
         delegate?.currentSort = currentSort
         delegate?.dismiss(animated: true)
     }

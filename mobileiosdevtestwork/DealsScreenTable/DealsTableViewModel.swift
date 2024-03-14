@@ -7,14 +7,6 @@
 
 import Foundation
 
-protocol IDealsTableViewModel {
-    
-}
+protocol IDealsTableViewModel {}
 
-final class DealsTableViewModel: IDealsTableViewModel {
-    
-    init() {
-        
-    }
-    
-}
+final class DealsTableViewModel: IDealsTableViewModel {}

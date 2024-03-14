@@ -7,16 +7,45 @@
 
 import Foundation
 
-enum DealsSorting {
-    case dealModificationDate(sortOrder: SortOrder)
-    case instrumentName(sortOrder: SortOrder)
-    case dealPrice(sortOrder: SortOrder)
-    case dealVolume(sortOrder: SortOrder)
-    case dealSide(sortOrder: SortOrder)
+enum DealsSorting: CaseIterable {
+    case dealModificationDate
+    case instrumentName
+    case dealPrice
+    case dealVolume
+    case dealSide
     
-    enum SortOrder {
-        case ascending
-        case descending
+    var sortName: String {
+        switch self {
+        case .dealModificationDate:
+            return "Дата изменения сделки"
+        case .instrumentName:
+            return "Имя инструмента"
+        case .dealPrice:
+            return "Цена сделки"
+        case .dealVolume:
+            return "Объем сделки"
+        case .dealSide:
+            return "Сторона сделки"
+        }
     }
+    
+    static var count: Int {
+        return allCases.count
+    }
+}
+
+enum SortOrder {
+    case ascending
+    case descending
+    
+    var orderName: String {
+        switch self {
+        case .ascending:
+            return "По возрастанию"
+        case .descending:
+            return "По убыванию"
+        }
+    }
+    
 }
 

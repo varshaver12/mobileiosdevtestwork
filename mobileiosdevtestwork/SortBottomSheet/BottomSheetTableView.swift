@@ -57,8 +57,16 @@ private extension BottomSheetTableView {
         
         tableView.tableHeaderView = BottomSheetHeader(viewModel: viewModel, currentSortOrder: currentSort.1)
         tableView.tableFooterView = BottomSheetFooter(viewModel: viewModel)
-        tableView.tableHeaderView?.frame.size.height = 80
-        tableView.tableFooterView?.frame.size.height = 60
+        tableView.tableHeaderView?.frame.size.height = LocalConstants.headerHeight
+        tableView.tableFooterView?.frame.size.height = LocalConstants.footerHeight
     }
     
+}
+
+private extension BottomSheetTableView {
+    enum LocalConstants {
+        static let headerHeight: CGFloat = 18
+        static let footerHeight: CGFloat = 10
+
+    }
 }

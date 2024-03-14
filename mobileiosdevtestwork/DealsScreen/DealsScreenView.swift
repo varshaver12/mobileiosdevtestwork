@@ -6,6 +6,7 @@
 //
 
 import SnapKit
+import Dispatch
 
 final class DealsScreenView: UIViewController {
     
@@ -65,9 +66,16 @@ private extension DealsScreenView {
     func setupConfiguration() {
         
         navigationItem.title = LocalConstants.navTitle
-        
+
         server.subscribeToDeals { [weak self] deals in
-            self?.tableView?.content.append(contentsOf: deals)
+            let group = DispatchGroup()
+            group.enter()
+            let queue = DispatchQueue.global(qos: .userInitiated)
+            queue.async {
+                guard let self = self else { return }
+                self.tableView?.content.append(contentsOf: deals)
+                group.leave()
+            }
         }
     }
     

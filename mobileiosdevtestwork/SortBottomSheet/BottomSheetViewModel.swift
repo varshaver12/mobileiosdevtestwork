@@ -15,12 +15,7 @@ protocol IBottomSheetViewModel {
 
 final class BottomSheetViewModel: IBottomSheetViewModel {
     
-    var currentSort: (DealsSorting, SortOrder) {
-        didSet {
-            print(currentSort.0.sortName)
-            print(currentSort.1.orderName)
-        }
-    }
+    var currentSort: (DealsSorting, SortOrder) 
     
     private weak var delegate: DealsScreenView?
     

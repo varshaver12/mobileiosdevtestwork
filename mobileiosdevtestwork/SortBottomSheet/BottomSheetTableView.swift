@@ -65,8 +65,8 @@ private extension BottomSheetTableView {
 
 private extension BottomSheetTableView {
     enum LocalConstants {
-        static let headerHeight: CGFloat = 18
-        static let footerHeight: CGFloat = 10
+        static let headerHeight: CGFloat = 80
+        static let footerHeight: CGFloat = 60
 
     }
 }

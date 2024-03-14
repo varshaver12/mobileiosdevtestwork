@@ -14,6 +14,7 @@ final class DealsScreenView: UIViewController {
         didSet {
             tableView?.currentSort = currentSort
             sortButton.setTitle(currentSort.0.sortName, for: .normal)
+            tableView?.content = tableView?.content ?? []
         }
     }
     

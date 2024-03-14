@@ -7,13 +7,14 @@
 При скроле списка он не должен тормозить.
 Проект должен быть выполнен в git-репозитории, на который необходимо предоставить ссылку.
 Делать изменения в классе Server нельзя. Необходимо строить решение, подразумевая, что в любой момент времени может прилететь новая пачка со сделками.
-<img src="https://github.com/varshaver12/mobileiosdevtestwork/assets/143330929/bf7518e3-2ae7-4804-945a-f81b12add183" width="300" height="300">
----
-Так как нет уточнения по минимальным требованиям ОС, минимальной была выбрана iOS 16.0, с целью упроститьзадачу работы с Botttom Sheet.
 
-![IMG_1202](https://github.com/varshaver12/mobileiosdevtestwork/assets/143330929/bf7518e3-2ae7-4804-945a-f81b12add183)
-![IMG_1201](https://github.com/varshaver12/mobileiosdevtestwork/assets/143330929/192554eb-33f0-44ba-a2b2-e40634757ed0)
-![IMG_1200](https://github.com/varshaver12/mobileiosdevtestwork/assets/143330929/139fe5c6-ed20-4bc0-b769-e4028bfe4dfb)
+---
+
+Так как нет уточнения по минимальным требованиям ОС, минимальной была выбрана iOS 16.0, с целью упростить задачу работы с Botttom Sheet.
+
+![IMG_1201 — средний размер](https://github.com/varshaver12/mobileiosdevtestwork/assets/143330929/894c8e97-fe76-4720-ac0f-2c1a417f2649)
+![IMG_1202 — средний размер](https://github.com/varshaver12/mobileiosdevtestwork/assets/143330929/569cfb09-dcab-4bb6-9c98-1889d8d615e8)
+![IMG_1200 — средний размер](https://github.com/varshaver12/mobileiosdevtestwork/assets/143330929/dde8e2c9-b19d-4b4b-9d58-093d88cc6216)
 
 
 ---

@@ -15,11 +15,15 @@ protocol IDealsTableManager: UITableViewDelegate, UITableViewDataSource {
 final class DealsTableManager: NSObject {
     
     // MARK: - Internal properties
+    private let lock = NSLock()
+    private let lockSort = NSLock()
     
-    var currentSort: (DealsSorting, SortOrder)
+    var currentSort: (DealsSorting, SortOrder) 
     
     var newContentCells: [Deal] {
         didSet {
+            lock.lock()
+            defer { lock.unlock() }
             contentCells.append(contentsOf: newContentCells)
             newContentCells = []
         }
@@ -27,44 +31,9 @@ final class DealsTableManager: NSObject {
     
     var contentCells: [Deal] = [] {
         didSet {
-            switch currentSort.0 {
-                
-            case .dealModificationDate:
-                if currentSort.1 == .ascending {
-                    contentCells.sort { $0.dateModifier < $1.dateModifier }
-                } else {
-                    contentCells.sort { $0.dateModifier > $1.dateModifier }
-                }
-                
-            case .instrumentName:
-                if currentSort.1 == .ascending {
-                    contentCells.sort { $0.instrumentName < $1.instrumentName }
-                } else {
-                    contentCells.sort { $0.instrumentName > $1.instrumentName }
-                }
-                
-            case .dealPrice:
-                if currentSort.1 == .ascending {
-                    contentCells.sort { $0.price < $1.price }
-                } else {
-                    contentCells.sort { $0.price > $1.price }
-                }
-                
-            case .dealVolume:
-                if currentSort.1 == .ascending {
-                    contentCells.sort { $0.amount < $1.amount }
-                } else {
-                    contentCells.sort { $0.amount > $1.amount }
-                }
-                
-            case .dealSide:
-                if currentSort.1 == .ascending {
-                    contentCells.sort { $0.side.rawValue < $1.side.rawValue }
-                } else {
-                    contentCells.sort { $0.side.rawValue > $1.side.rawValue }
-                }
-            }
-            
+            lockSort.lock()
+            defer { lockSort.unlock() }
+            sortt(contentCells: &contentCells)
         }
     }
     
@@ -98,7 +67,47 @@ extension DealsTableManager: IDealsTableManager {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-
+        
         return Constants.heightForRow
+    }
+    
+    func sortt(contentCells: inout [Deal]) {
+        switch currentSort.0 {
+            
+        case .dealModificationDate:
+            if currentSort.1 == .ascending {
+                contentCells.sort { $0.dateModifier < $1.dateModifier }
+            } else {
+                contentCells.sort { $0.dateModifier > $1.dateModifier }
+            }
+            
+        case .instrumentName:
+            if currentSort.1 == .ascending {
+                contentCells.sort { $0.instrumentName < $1.instrumentName }
+            } else {
+                contentCells.sort { $0.instrumentName > $1.instrumentName }
+            }
+            
+        case .dealPrice:
+            if currentSort.1 == .ascending {
+                contentCells.sort { $0.price < $1.price }
+            } else {
+                contentCells.sort { $0.price > $1.price }
+            }
+            
+        case .dealVolume:
+            if currentSort.1 == .ascending {
+                contentCells.sort { $0.amount < $1.amount }
+            } else {
+                contentCells.sort { $0.amount > $1.amount }
+            }
+            
+        case .dealSide:
+            if currentSort.1 == .ascending {
+                contentCells.sort { $0.side.rawValue < $1.side.rawValue }
+            } else {
+                contentCells.sort { $0.side.rawValue > $1.side.rawValue }
+            }
+        }
     }
 }

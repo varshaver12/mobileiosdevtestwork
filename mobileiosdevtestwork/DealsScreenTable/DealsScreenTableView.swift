@@ -25,6 +25,8 @@ final class DealsScreenTableView: UITableView {
             tableManager?.currentSort = currentSort
             DispatchQueue.main.async{ [weak self] in
                 self?.reloadData()
+                let indexPath = IndexPath(row: 0, section: 0)
+                self?.scrollToRow(at: indexPath, at: .top, animated: true)
             }
         }
     }

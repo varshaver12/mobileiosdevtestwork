@@ -43,10 +43,6 @@ final class DealsTableManager: NSObject {
     }
     
     @objc func dataUpdated(_ notification: Notification) {
-        viewModel.lockAppend.lock()
-
-        viewModel.lockAppend.unlock()
-        
         sotingDeals()
         NotificationCenter.default.post(name: Notification.Name("ReloadContent"), object: nil)
     }

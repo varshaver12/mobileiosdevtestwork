@@ -10,15 +10,6 @@ import Dispatch
 
 final class DealsScreenView: UIViewController {
     
-    var currentSort: (DealsSorting, SortOrder) = (.dealModificationDate, .ascending) {
-        didSet {
-            tableView?.currentSort = currentSort
-            sortButton.setTitle(currentSort.0.sortName, for: .normal)
-            tableView?.content = tableView?.content ?? []
-        }
-    }
-    
-    private var viewModel: IDealsScreenViewModel
     private var tableView: DealsScreenTableView?
     
     private lazy var sortButton: UIButton = {
@@ -32,7 +23,7 @@ final class DealsScreenView: UIViewController {
         return button
     }()
     
-    private lazy var server = Server()
+    var viewModel: IDealsScreenViewModel
     
     init(viewModel: IDealsScreenViewModel) {
         self.viewModel = viewModel
@@ -53,36 +44,55 @@ final class DealsScreenView: UIViewController {
         super.viewDidLoad()
         setupView()
         setupConstraints()
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(sortUpdated(_:)),
+                                               name: Notification.Name("SortUpdated"),
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(reloadContent(_:)),
+                                               name: Notification.Name("ReloadContent"),
+                                               object: nil)
+        viewModel.getNewDeal()
     }
     
 }
 
 private extension DealsScreenView {
     
+    @objc func sortUpdated(_ notification: Notification) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            
+            
+            let newTitle = self.viewModel.currentSort.0.sortName
+            let indexPath = IndexPath(row: 0, section: 0)
+            self.tableView?.scrollToRow(at: indexPath, at: .top, animated: true)
+            self.sortButton.setTitle(newTitle, for: .normal)
+            tableView?.reloadData()
+        }
+    }
+    
+    @objc func reloadContent(_ notification: Notification) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            
+            tableView?.reloadData()
+        }
+    }
+    
     @objc func apllyButtonTapped() {
-        viewModel.openSortingSettingsScreen(initialViewController: self,
-                                            currentSort: currentSort)
+        viewModel.openSortingSettingsScreen(initialViewController: self)
     }
     
     func setupConfiguration() {
         
         navigationItem.title = LocalConstants.navTitle
-
-        server.subscribeToDeals { [weak self] deals in
-            let group = DispatchGroup()
-            group.enter()
-            let queue = DispatchQueue.global(qos: .userInitiated)
-            queue.async {
-                guard let self = self else { return }
-                self.tableView?.content.append(contentsOf: deals)
-                group.leave()
-            }
-        }
+        
     }
     
     func createTable() -> DealsScreenTableView {
-        let tableViewModel = DealsTableViewModel()
-        return DealsScreenTableView(viewModel: tableViewModel, currentSort: currentSort)
+        return DealsScreenTableView(viewModel: viewModel)
     }
     
     func setupView() {

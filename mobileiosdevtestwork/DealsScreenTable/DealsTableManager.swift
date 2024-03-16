@@ -8,40 +8,53 @@
 import UIKit
 
 protocol IDealsTableManager: UITableViewDelegate, UITableViewDataSource {
-    var newContentCells: [Deal] { get set }
     var currentSort: (DealsSorting, SortOrder) { get set }
 }
 
 final class DealsTableManager: NSObject {
     
     // MARK: - Internal properties
-    private let lock = NSLock()
-    private let lockSort = NSLock()
+    let lockSort = NSLock()
+    private var viewModel: IDealsScreenViewModel
     
-    var currentSort: (DealsSorting, SortOrder) 
-    
-    var newContentCells: [Deal] {
+    var currentSort: (DealsSorting, SortOrder) {
         didSet {
-            lock.lock()
-            defer { lock.unlock() }
-            contentCells.append(contentsOf: newContentCells)
-            newContentCells = []
+            sotingDeals()
         }
     }
     
-    var contentCells: [Deal] = [] {
-        didSet {
-            lockSort.lock()
-            defer { lockSort.unlock() }
-            sortt(contentCells: &contentCells)
-        }
-    }
     
     // MARK: - Lifecycle
     
-    init(newContentCells: [Deal], currentSort: (DealsSorting, SortOrder)) {
-        self.newContentCells = contentCells
+    init(viewModel: IDealsScreenViewModel, currentSort: (DealsSorting, SortOrder)) {
+        
+        self.viewModel = viewModel
         self.currentSort = currentSort
+        super.init()
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(dataUpdated(_:)),
+                                               name: Notification.Name("DataUpdated"),
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(sortUpdated(_:)),
+                                               name: Notification.Name("SortUpdated"),
+                                               object: nil)
+    }
+    
+    @objc func dataUpdated(_ notification: Notification) {
+        viewModel.lockAppend.lock()
+
+        viewModel.lockAppend.unlock()
+        
+        sotingDeals()
+        NotificationCenter.default.post(name: Notification.Name("ReloadContent"), object: nil)
+    }
+    
+    @objc func sortUpdated(_ notification: Notification) {
+        lockSort.lock()
+        defer { lockSort.unlock() }
+        currentSort = viewModel.currentSort
     }
     
 }
@@ -51,7 +64,10 @@ final class DealsTableManager: NSObject {
 extension DealsTableManager: IDealsTableManager {
     
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        contentCells.count
+        viewModel.lockAppend.lock()
+        let count = viewModel.content.count
+        viewModel.lockAppend.unlock()
+        return count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -60,8 +76,10 @@ extension DealsTableManager: IDealsTableManager {
                                                        for: indexPath) as? DealTableViewCell else {
             return UITableViewCell()
         }
+        viewModel.lockAppend.lock()
+        cell.setContent(deal: viewModel.content[indexPath.row])
+        viewModel.lockAppend.unlock()
         
-        cell.setContent(deal: contentCells[indexPath.row])
         
         return cell
     }
@@ -71,43 +89,46 @@ extension DealsTableManager: IDealsTableManager {
         return Constants.heightForRow
     }
     
-    func sortt(contentCells: inout [Deal]) {
+    func sotingDeals() {
+        viewModel.lockAppend.lock()
         switch currentSort.0 {
             
         case .dealModificationDate:
             if currentSort.1 == .ascending {
-                contentCells.sort { $0.dateModifier < $1.dateModifier }
+                viewModel.content.sort { $0.dateModifier < $1.dateModifier }
             } else {
-                contentCells.sort { $0.dateModifier > $1.dateModifier }
+                viewModel.content.sort { $0.dateModifier > $1.dateModifier }
             }
             
         case .instrumentName:
             if currentSort.1 == .ascending {
-                contentCells.sort { $0.instrumentName < $1.instrumentName }
+                viewModel.content.sort { $0.instrumentName < $1.instrumentName }
             } else {
-                contentCells.sort { $0.instrumentName > $1.instrumentName }
+                viewModel.content.sort { $0.instrumentName > $1.instrumentName }
             }
             
         case .dealPrice:
             if currentSort.1 == .ascending {
-                contentCells.sort { $0.price < $1.price }
+                viewModel.content.sort { $0.price < $1.price }
             } else {
-                contentCells.sort { $0.price > $1.price }
+                viewModel.content.sort { $0.price > $1.price }
             }
             
         case .dealVolume:
             if currentSort.1 == .ascending {
-                contentCells.sort { $0.amount < $1.amount }
+                viewModel.content.sort { $0.amount < $1.amount }
             } else {
-                contentCells.sort { $0.amount > $1.amount }
+                viewModel.content.sort { $0.amount > $1.amount }
             }
             
         case .dealSide:
             if currentSort.1 == .ascending {
-                contentCells.sort { $0.side.rawValue < $1.side.rawValue }
+                viewModel.content.sort { $0.side.rawValue < $1.side.rawValue }
             } else {
-                contentCells.sort { $0.side.rawValue > $1.side.rawValue }
+                viewModel.content.sort { $0.side.rawValue > $1.side.rawValue }
             }
         }
+        viewModel.lockAppend.unlock()
+        
     }
 }

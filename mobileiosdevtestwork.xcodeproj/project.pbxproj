@@ -15,7 +15,6 @@
 		3B8B08DD2BA17E28003A2EEF /* DealsScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8B08DC2BA17E28003A2EEF /* DealsScreenView.swift */; };
 		3B8B08DF2BA17E38003A2EEF /* DealsScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8B08DE2BA17E38003A2EEF /* DealsScreenViewModel.swift */; };
 		3B8B08E22BA183C9003A2EEF /* DealsScreenTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8B08E12BA183C9003A2EEF /* DealsScreenTableView.swift */; };
-		3B8B08E42BA183DF003A2EEF /* DealsTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8B08E32BA183DF003A2EEF /* DealsTableViewModel.swift */; };
 		3B8B08E62BA183FD003A2EEF /* DealsTableManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8B08E52BA183FD003A2EEF /* DealsTableManager.swift */; };
 		3B8B08E82BA18422003A2EEF /* DealsTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8B08E72BA18422003A2EEF /* DealsTableHeaderView.swift */; };
 		3B8B08EB2BA18454003A2EEF /* IDealTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8B08EA2BA18454003A2EEF /* IDealTableViewCell.swift */; };
@@ -45,7 +44,6 @@
 		3B8B08DC2BA17E28003A2EEF /* DealsScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DealsScreenView.swift; sourceTree = "<group>"; };
 		3B8B08DE2BA17E38003A2EEF /* DealsScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DealsScreenViewModel.swift; sourceTree = "<group>"; };
 		3B8B08E12BA183C9003A2EEF /* DealsScreenTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DealsScreenTableView.swift; sourceTree = "<group>"; };
-		3B8B08E32BA183DF003A2EEF /* DealsTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DealsTableViewModel.swift; sourceTree = "<group>"; };
 		3B8B08E52BA183FD003A2EEF /* DealsTableManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DealsTableManager.swift; sourceTree = "<group>"; };
 		3B8B08E72BA18422003A2EEF /* DealsTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DealsTableHeaderView.swift; sourceTree = "<group>"; };
 		3B8B08EA2BA18454003A2EEF /* IDealTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDealTableViewCell.swift; sourceTree = "<group>"; };
@@ -168,7 +166,6 @@
 			children = (
 				3B8B08F32BA18AF8003A2EEF /* DealsSorting.swift */,
 				3B8B08E12BA183C9003A2EEF /* DealsScreenTableView.swift */,
-				3B8B08E32BA183DF003A2EEF /* DealsTableViewModel.swift */,
 				3B8B08E52BA183FD003A2EEF /* DealsTableManager.swift */,
 				3B8B08E72BA18422003A2EEF /* DealsTableHeaderView.swift */,
 				3B8B08E92BA18447003A2EEF /* DealsScreenTableViewCell */,
@@ -349,7 +346,6 @@
 				3B8B09062BA1BF32003A2EEF /* BottomSheetFooter.swift in Sources */,
 				3B8B08F92BA1AA9F003A2EEF /* Constants.swift in Sources */,
 				3B8B08E22BA183C9003A2EEF /* DealsScreenTableView.swift in Sources */,
-				3B8B08E42BA183DF003A2EEF /* DealsTableViewModel.swift in Sources */,
 				3B8B08F42BA18AF8003A2EEF /* DealsSorting.swift in Sources */,
 				3B8B09022BA1BF0B003A2EEF /* BottomSheetCell.swift in Sources */,
 				3B8B08F62BA19CED003A2EEF /* Int+Extensions.swift in Sources */,

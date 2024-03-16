@@ -15,7 +15,7 @@ protocol IBottomSheetViewModel {
 
 final class BottomSheetViewModel: IBottomSheetViewModel {
     
-    var currentSort: (DealsSorting, SortOrder) 
+    var currentSort: (DealsSorting, SortOrder)
     
     private weak var delegate: DealsScreenView?
     
@@ -25,8 +25,13 @@ final class BottomSheetViewModel: IBottomSheetViewModel {
     }
     
     func sortOrderButtonTapped() {
-        delegate?.currentSort = currentSort
-        delegate?.dismiss(animated: true)
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            
+            self.delegate?.dismiss(animated: true, completion: {
+                self.delegate?.viewModel.currentSort = self.currentSort
+            })
+        }
     }
     
 }

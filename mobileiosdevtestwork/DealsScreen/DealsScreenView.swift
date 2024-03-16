@@ -6,7 +6,6 @@
 //
 
 import SnapKit
-import Dispatch
 
 final class DealsScreenView: UIViewController {
     
@@ -63,7 +62,6 @@ private extension DealsScreenView {
     @objc func sortUpdated(_ notification: Notification) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
-            
             
             let newTitle = self.viewModel.currentSort.0.sortName
             let indexPath = IndexPath(row: 0, section: 0)

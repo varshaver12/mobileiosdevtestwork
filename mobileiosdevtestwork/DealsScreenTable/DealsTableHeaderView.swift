@@ -26,7 +26,7 @@ final class DealsTableHeaderView: UIView {
         setupSubViews()
         setupConstraint()
     }
-
+    
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -99,6 +99,6 @@ private extension DealsTableHeaderView {
         static let price: String = "Price"
         static let amount: String = "Amount"
         static let side: String = "Side"
-
+        
     }
 }

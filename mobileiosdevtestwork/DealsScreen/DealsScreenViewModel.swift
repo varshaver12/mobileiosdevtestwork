@@ -12,18 +12,20 @@ protocol IDealsScreenViewModel {
     func getNewDeal()
     var content: [Deal] { get set}
     var currentSort: (DealsSorting, SortOrder) { get set }
-    var lockAppend: NSLock { get }
 }
 
 final class DealsScreenViewModel: IDealsScreenViewModel {
     
     private lazy var server = Server()
+    private var flagNotification = true
     let lockAppend = NSLock()
     var content: [Deal] = []
     
     var currentSort: (DealsSorting, SortOrder) = (.dealModificationDate, .descending) {
         didSet {
-            NotificationCenter.default.post(name: Notification.Name("SortUpdated"), object: nil)
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: Notification.Name("SortUpdated"), object: nil)
+            }
         }
     }
     
@@ -34,7 +36,17 @@ final class DealsScreenViewModel: IDealsScreenViewModel {
                 self.lockAppend.lock()
                 self.content.append(contentsOf: deals)
                 self.lockAppend.unlock()
-                NotificationCenter.default.post(name: Notification.Name("DataUpdated"), object: nil)
+                if self.flagNotification {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        NotificationCenter.default.post(name: Notification.Name("DataUpdated"), object: nil)
+                        self.flagNotification = true
+                    }
+                    DispatchQueue.main.async {
+                        self.flagNotification = false
+                    }
+                    
+                }
+                
             }
         }
     }

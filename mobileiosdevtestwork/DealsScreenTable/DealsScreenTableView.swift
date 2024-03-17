@@ -22,7 +22,10 @@ final class DealsScreenTableView: UITableView {
         
         tableSetup()
         setupConfigurates()
-        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(reloadContent(_:)),
+                                               name: Notification.Name("ReloadContent"),
+                                               object: nil)
     }
     
     @available(*, unavailable)
@@ -30,11 +33,17 @@ final class DealsScreenTableView: UITableView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-    
 }
 
 private extension DealsScreenTableView {
+    
+    @objc func reloadContent(_ notification: Notification) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+
+            reloadData()
+        }
+    }
     
     func tableSetup() {
         tableManager = DealsTableManager(viewModel: viewModel, currentSort: viewModel.currentSort)
@@ -54,7 +63,6 @@ private extension DealsScreenTableView {
         
         tableHeaderView = DealsTableHeaderView()
         tableHeaderView?.frame.size.height = LocalConstants.tableHeaderHeight
-        
     }
     
 }

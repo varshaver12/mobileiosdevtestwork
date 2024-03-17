@@ -48,10 +48,7 @@ final class DealsScreenView: UIViewController {
                                                selector: #selector(sortUpdated(_:)),
                                                name: Notification.Name("SortUpdated"),
                                                object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(reloadContent(_:)),
-                                               name: Notification.Name("ReloadContent"),
-                                               object: nil)
+
         viewModel.getNewDeal()
     }
     
@@ -71,22 +68,14 @@ private extension DealsScreenView {
         }
     }
     
-    @objc func reloadContent(_ notification: Notification) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            
-            tableView?.reloadData()
-        }
-    }
+
     
     @objc func apllyButtonTapped() {
         viewModel.openSortingSettingsScreen(initialViewController: self)
     }
     
     func setupConfiguration() {
-        
         navigationItem.title = LocalConstants.navTitle
-        
     }
     
     func createTable() -> DealsScreenTableView {

@@ -132,10 +132,10 @@ extension DealsTableManager {
         
         
         viewModel.concurrentQueue.async(flags: .barrier) { [weak self] in
-            self?.semaphore.wait()
             guard let self = self else { return }
             guard !self.viewModel.content.isEmpty else { return }
             
+            semaphore.wait()
             self.lockSort = true
             self.localArrayDeals += self.viewModel.content
             self.numberOfRows = self.localArrayDeals.count

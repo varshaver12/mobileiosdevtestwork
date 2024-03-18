@@ -20,6 +20,7 @@ final class DealsScreenViewModel: IDealsScreenViewModel {
     
     // MARK: - Private properties
     private lazy var server = Server()
+    private let semaphore = DispatchSemaphore(value: 1)
     private var flagNotification = true
     // MARK: - Internal properties
     let concurrentQueue = DispatchQueue(label: "getNewDeal", attributes: .concurrent)
@@ -50,14 +51,17 @@ extension DealsScreenViewModel {
             guard let self = self else { return }
             
             self.concurrentQueue.async {
+                self.semaphore.wait()
                 guard !deals.isEmpty else { return }
-                self.content.append(contentsOf: deals)
                 if self.flagNotification {
+                    self.content.removeAll()
                     self.flagNotification = false
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                         NotificationCenter.default.post(name: Notification.Name("DataUpdated"), object: nil)
                     }
                 }
+                self.content.append(contentsOf: deals)
+                self.semaphore.signal()
             }
         }
     }

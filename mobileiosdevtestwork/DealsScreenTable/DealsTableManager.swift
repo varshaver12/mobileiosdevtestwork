@@ -130,7 +130,6 @@ private extension DealsTableManager {
 extension DealsTableManager {
     func dataUpdated(_ notification: Notification) {
         
-        
         viewModel.concurrentQueue.async(flags: .barrier) { [weak self] in
             guard let self = self else { return }
             guard !self.viewModel.content.isEmpty else { return }
@@ -139,12 +138,11 @@ extension DealsTableManager {
             self.lockSort = true
             self.localArrayDeals += self.viewModel.content
             self.numberOfRows = self.localArrayDeals.count
-            self.viewModel.content.removeAll()
             self.sortingDeals()
             self.lockSort = false
             
-            NotificationCenter.default.post(name: Notification.Name("CopyEnded"), object: nil)
             semaphore.signal()
+            NotificationCenter.default.post(name: Notification.Name("CopyEnded"), object: nil)
         }
         
         DispatchQueue.main.async {

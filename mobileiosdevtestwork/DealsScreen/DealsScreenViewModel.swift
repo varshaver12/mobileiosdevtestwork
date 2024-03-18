@@ -8,17 +8,21 @@
 import UIKit
 
 protocol IDealsScreenViewModel {
-    func openSortingSettingsScreen(initialViewController: DealsScreenView)
-    func getNewDeal()
     var content: [Deal] { get set}
     var currentSort: (DealsSorting, SortOrder) { get set }
+    var concurrentQueue: DispatchQueue { get }
+    
+    func openSortingSettingsScreen(initialViewController: DealsScreenView)
+    func getNewDeal()
 }
 
 final class DealsScreenViewModel: IDealsScreenViewModel {
     
+    // MARK: - Private properties
     private lazy var server = Server()
     private var flagNotification = true
-    let lockAppend = NSLock()
+    // MARK: - Internal properties
+    let concurrentQueue = DispatchQueue(label: "getNewDeal", attributes: .concurrent)
     var content: [Deal] = []
     
     var currentSort: (DealsSorting, SortOrder) = (.dealModificationDate, .descending) {
@@ -29,24 +33,31 @@ final class DealsScreenViewModel: IDealsScreenViewModel {
         }
     }
     
+    init() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(copyEnded(_:)),
+                                               name: Notification.Name("CopyEnded"),
+                                               object: nil)
+    }
+    
+}
+
+// MARK: - IDealsScreenViewModel Methods
+extension DealsScreenViewModel {
+    
     func getNewDeal() {
         server.subscribeToDeals { [weak self] deals in
-            DispatchQueue(label: "getNewDeal").async {
-                guard let self = self else { return }
-                self.lockAppend.lock()
+            guard let self = self else { return }
+            
+            self.concurrentQueue.async {
+                guard !deals.isEmpty else { return }
                 self.content.append(contentsOf: deals)
-                self.lockAppend.unlock()
                 if self.flagNotification {
+                    self.flagNotification = false
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                         NotificationCenter.default.post(name: Notification.Name("DataUpdated"), object: nil)
-                        self.flagNotification = true
                     }
-                    DispatchQueue.main.async {
-                        self.flagNotification = false
-                    }
-                    
                 }
-                
             }
         }
     }
@@ -62,6 +73,16 @@ final class DealsScreenViewModel: IDealsScreenViewModel {
         initialViewController.present(bottomSheet, animated: true)
     }
     
+}
+
+// MARK: - Objective-C Methods
+@objc
+extension DealsScreenViewModel {
+    func copyEnded(_ notification: Notification) {
+        DispatchQueue.main.async {
+            self.flagNotification = true
+        }
+    }
 }
 
 private extension DealsScreenViewModel {

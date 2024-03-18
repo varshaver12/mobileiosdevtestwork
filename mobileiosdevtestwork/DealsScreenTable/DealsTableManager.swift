@@ -14,17 +14,21 @@ protocol IDealsTableManager: UITableViewDelegate, UITableViewDataSource {
 final class DealsTableManager: NSObject {
     
     // MARK: - Internal properties
-    let lockLocalContent = NSLock()
+    private let semaphore = DispatchSemaphore(value: 1)
     private var viewModel: IDealsScreenViewModel
+    private var localArrayDeals: [Deal] = []
+    private var lockSort = false
+    private var numberOfRows = 0
     
-    private var localContentTable: [Deal] = []
-    
+    // MARK: - Internal properties
     var currentSort: (DealsSorting, SortOrder) {
         didSet {
-            sotingDeals()
+            guard lockSort == false else {
+                return
+            }
+            sortingDeals()
         }
     }
-    
     
     // MARK: - Lifecycle
     
@@ -43,34 +47,14 @@ final class DealsTableManager: NSObject {
                                                name: Notification.Name("SortUpdated"),
                                                object: nil)
     }
-    
-    @objc func dataUpdated(_ notification: Notification) {
-        lockLocalContent.lock()
-        if !viewModel.content.isEmpty {
-            localContentTable += viewModel.content
-            viewModel.content.removeAll()
-            
-        }
-        lockLocalContent.unlock()
-        
-        sotingDeals()
-        DispatchQueue.main.async {
-            NotificationCenter.default.post(name: Notification.Name("ReloadContent"), object: nil)
-        }
-    }
-    
-    @objc func sortUpdated(_ notification: Notification) {
-        currentSort = viewModel.currentSort
-    }
-    
 }
 
-// MARK: - IDealsTableManager
 
+// MARK: - IDealsTableManager
 extension DealsTableManager: IDealsTableManager {
     
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        localContentTable.count
+        numberOfRows
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -79,8 +63,9 @@ extension DealsTableManager: IDealsTableManager {
                                                        for: indexPath) as? DealTableViewCell else {
             return UITableViewCell()
         }
-        cell.setContent(deal: localContentTable[indexPath.row])
-        
+        semaphore.wait()
+        cell.setContent(deal: localArrayDeals[indexPath.row])
+        semaphore.signal()
         
         return cell
     }
@@ -89,51 +74,85 @@ extension DealsTableManager: IDealsTableManager {
         
         return Constants.heightForRow
     }
-    
-    func sotingDeals() {
-        DispatchQueue(label: "sortLocalContentTable").async { [weak self] in
+
+}
+
+// MARK: - Private Methods
+private extension DealsTableManager {
+
+    func sortingDeals() {
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             guard let self = self else { return }
             
-            lockLocalContent.lock()
             switch currentSort.0 {
                 
             case .dealModificationDate:
                 if currentSort.1 == .ascending {
-                    localContentTable.sort { $0.dateModifier < $1.dateModifier }
+                    localArrayDeals.sort { $0.dateModifier < $1.dateModifier }
                 } else {
-                    localContentTable.sort { $0.dateModifier > $1.dateModifier }
+                    localArrayDeals.sort { $0.dateModifier > $1.dateModifier }
                 }
                 
             case .instrumentName:
                 if currentSort.1 == .ascending {
-                    localContentTable.sort { $0.instrumentName < $1.instrumentName }
+                    localArrayDeals.sort { $0.instrumentName < $1.instrumentName }
                 } else {
-                    localContentTable.sort { $0.instrumentName > $1.instrumentName }
+                    localArrayDeals.sort { $0.instrumentName > $1.instrumentName }
                 }
                 
             case .dealPrice:
                 if currentSort.1 == .ascending {
-                    localContentTable.sort { $0.price < $1.price }
+                    localArrayDeals.sort { $0.price < $1.price }
                 } else {
-                    localContentTable.sort { $0.price > $1.price }
+                    localArrayDeals.sort { $0.price > $1.price }
                 }
                 
             case .dealVolume:
                 if currentSort.1 == .ascending {
-                    localContentTable.sort { $0.amount < $1.amount }
+                    localArrayDeals.sort { $0.amount < $1.amount }
                 } else {
-                    localContentTable.sort { $0.amount > $1.amount }
+                    localArrayDeals.sort { $0.amount > $1.amount }
                 }
                 
             case .dealSide:
                 if currentSort.1 == .ascending {
-                    localContentTable.sort { $0.side.rawValue < $1.side.rawValue }
+                    localArrayDeals.sort { $0.side.rawValue < $1.side.rawValue }
                 } else {
-                    localContentTable.sort { $0.side.rawValue > $1.side.rawValue }
+                    localArrayDeals.sort { $0.side.rawValue > $1.side.rawValue }
                 }
             }
-            lockLocalContent.unlock()
         }
+    }
+}
 
+// MARK: - Objective-C Methods
+@objc
+extension DealsTableManager {
+    func dataUpdated(_ notification: Notification) {
+        
+        
+        viewModel.concurrentQueue.async(flags: .barrier) { [weak self] in
+            self?.semaphore.wait()
+            guard let self = self else { return }
+            guard !self.viewModel.content.isEmpty else { return }
+            
+            self.lockSort = true
+            self.localArrayDeals += self.viewModel.content
+            self.numberOfRows = self.localArrayDeals.count
+            self.viewModel.content.removeAll()
+            self.sortingDeals()
+            self.lockSort = false
+            
+            NotificationCenter.default.post(name: Notification.Name("CopyEnded"), object: nil)
+            semaphore.signal()
+        }
+        
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: Notification.Name("ReloadContent"), object: nil)
+        }
+    }
+    
+    func sortUpdated(_ notification: Notification) {
+        currentSort = viewModel.currentSort
     }
 }

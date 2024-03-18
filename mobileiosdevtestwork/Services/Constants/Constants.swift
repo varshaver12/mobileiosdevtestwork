@@ -15,8 +15,6 @@ enum Constants {
     static let inset16: CGFloat = 16
     static let inset20: CGFloat = 20
 
-    
-    
     static let fontSize11: CGFloat = 11
     static let fontSize12: CGFloat = 12
     
